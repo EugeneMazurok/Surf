@@ -1,21 +1,24 @@
-//
-//  MapScreenView.swift
-//  surf
-//
-//  Created by Eugene on 6/24/25.
-//
-
 import SwiftUI
 import MapKit
+import CoreLocation
 
 struct MapScreenView: View {
     @State private var region = MKCoordinateRegion(
-        center: CLLocationCoordinate2D(latitude: 55.7558, longitude: 37.6176), // Центр Москвы
-        span: MKCoordinateSpan(latitudeDelta: 0.4, longitudeDelta: 0.4)
+        center: CLLocationCoordinate2D(latitude: 55.75, longitude: 37.61),
+        span: MKCoordinateSpan(latitudeDelta: 0.2, longitudeDelta: 0.2)
     )
     
     @State private var selectedCafeId: UUID?
+    @EnvironmentObject var locationManager: LocationManager
+    @Environment(\.colorScheme) var colorScheme
     
+    var filteredPromos: [Promo] {
+        guard let userCity = locationManager.city?.lowercased() else { return [] }
+        return promos.filter { promo in
+            promo.cafe.city.lowercased() == userCity
+        }
+    }
+
     var body: some View {
         VStack(spacing: 0) {
             Map(coordinateRegion: $region, annotationItems: cafesData) { cafe in
@@ -32,77 +35,47 @@ struct MapScreenView: View {
                     }
                 }
             }
-            .frame(height: 350)
-            .cornerRadius(20)
+            .frame(height: 340)
+            .cornerRadius(24)
             .padding([.horizontal, .top])
-            
-            Text("Все кофейни")
-                .font(.title3.bold())
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .padding(.horizontal)
-                .padding(.top, 8)
-            
-            ScrollViewReader { proxy in
-                ScrollView(.horizontal, showsIndicators: false) {
-                    HStack(spacing: 16) {
-                        ForEach(cafesData) { cafe in
-                            CafeCardsView(cafe: cafe)
-                                .id(cafe.id)
-                                .onTapGesture {
-                                    selectedCafeId = cafe.id
-                                    withAnimation {
-                                        region.center = CLLocationCoordinate2D(latitude: cafe.latitude, longitude: cafe.longitude)
-                                        proxy.scrollTo(cafe.id, anchor: .center)
-                                    }
-                                }
-                        }
-                    }
-                    .padding(.horizontal)
+            .onAppear {
+                locationManager.requestLocation()
+            }
+            .onChange(of: locationManager.location) { newLocation in
+                if let coordinate = newLocation?.coordinate {
+                    region.center = coordinate
                 }
             }
-            .padding(.bottom, 16)
-        }
-    }
-}
-
-struct CafeCardsView: View {
-    let cafe: Cafe
-    
-    var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
-            Image(cafe.imageName)
-                .resizable()
-                .scaledToFill()
-                .frame(height: 120)
-                .clipped()
-                .cornerRadius(12)
             
-            Text(cafe.name)
-                .font(.headline)
-                .lineLimit(1)
+            Divider()
+                .padding(.vertical, 8)
             
-            Text("\(cafe.city), \(cafe.address)")
-                .font(.caption)
-                .foregroundColor(.secondary)
-                .lineLimit(2)
             
-            Text("🎁 Первый кофе бесплатно утром!")
-                .font(.footnote)
-                .foregroundColor(.green)
-            
-            Button("Открыть в картах") {
-                let url = URL(string: "http://maps.apple.com/?ll=\(cafe.latitude),\(cafe.longitude)")!
-                UIApplication.shared.open(url)
+            VStack(alignment: .leading, spacing: 8) {
+                Text("Акции \(locationManager.city.map { "в \($0)" } ?? "рядом")")
+                    .font(.title3.bold())
+                    .padding(.horizontal)
+                    .foregroundColor(.primary)
+                
+                if filteredPromos.isEmpty {
+                    Text("В вашем городе пока нет доступных акций 🥲")
+                        .font(.subheadline)
+                        .foregroundColor(.secondary)
+                        .padding()
+                        .frame(maxWidth: .infinity, alignment: .center)
+                } else {
+                    ScrollView {
+                        VStack(spacing: 14) {
+                            ForEach(filteredPromos) { promo in
+                                PromoCard(promo: promo)
+                                    .frame(maxWidth: .infinity)
+                            }
+                        }
+                        .padding([.horizontal, .bottom])
+                    }
+                }
             }
-            .font(.caption)
-            .foregroundColor(.blue)
         }
-        .padding()
-        .frame(width: 250)
-        .background(
-            RoundedRectangle(cornerRadius: 16)
-                .fill(Color(.secondarySystemBackground))
-                .shadow(radius: 2)
-        )
+        .background(Color(.systemGroupedBackground).ignoresSafeArea())
     }
 }

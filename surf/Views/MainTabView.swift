@@ -10,25 +10,26 @@ import SwiftUI
 
 struct MainTabView: View {
     @State private var selectedTab = 1
+
     var body: some View {
         TabView(selection: $selectedTab) {
-            CafesView()
-                .tabItem {
-                    Label("Кофейни", systemImage: "mappin.and.ellipse")
-                }
-                .tag(0)
-            
-            HomeView()
-                .tabItem {
-                    Label("Главная", systemImage: "house")
-                }
-                .tag(1)
-            
-            MapScreenView()
-                .tabItem {
-                    Label("test", systemImage: "quote.bubble")
-                }
-                .tag(2)
+        CafesView()
+            .tabItem {
+                Label("Кофейни", systemImage: "mappin.and.ellipse")
+            }
+            .tag(0)
+
+        HomeView()
+            .tabItem {
+                Label("Главная", systemImage: "house")
+            }
+            .tag(1)
+
+        MapScreenView()
+            .tabItem {
+                Label("Карта", systemImage: "map")
+            }
+            .tag(2)
         }
     }
 }

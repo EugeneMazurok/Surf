@@ -12,7 +12,7 @@ struct Cafe: Identifiable {
     let name: String
     let address: String
     let city: String
-    let imageName: String
+    let imageURL: URL
     let latitude: Double
     let longitude: Double
 }
