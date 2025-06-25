@@ -9,23 +9,23 @@ import Foundation
 
 let cafesData: [Cafe] = [
     Cafe(name: "Surf Coffee Garden", address: "ул. Большая Садовая, 81/31", city: "Ростов-на-Дону",
-         imageURL: URL(string: "https://example.com/coffee_placeholder.jpg")!,
+         imageURL: URL(string: "https://avatars.mds.yandex.net/get-altay/947364/2a0000016594b94e8a8fba235644ba095bfb/XXXL")!,
          latitude: 47.222078, longitude: 39.720349),
     
     Cafe(name: "Surf Coffee Soborniy", address: "пер. Соборный, 28/45", city: "Ростов-на-Дону",
-         imageURL: URL(string: "https://example.com/coffee_placeholder.jpg")!,
+         imageURL: URL(string: "https://avatars.mds.yandex.net/get-altay/5479189/2a0000017d762a5f3ee2734fc123add1bb37/XXXL")!,
          latitude: 47.222876, longitude: 39.720965),
     
     Cafe(name: "Surf Coffee Astor", address: "Будённовский просп., 49/97", city: "Ростов-на-Дону",
-         imageURL: URL(string: "https://example.com/coffee_placeholder.jpg")!,
+         imageURL: URL(string: "https://avatars.mds.yandex.net/get-altay/3598710/2a00000182d1a4a8b06079cc1679b447bb64/XXXL")!,
          latitude: 47.225295, longitude: 39.720703),
     
     Cafe(name: "Surf Coffee ASP", address: "ул. Пушкинская, 112", city: "Ростов-на-Дону",
-         imageURL: URL(string: "https://example.com/coffee_placeholder.jpg")!,
+         imageURL: URL(string: "https://avatars.mds.yandex.net/get-altay/5445147/2a0000017dcac126797724687c59bf7a72ac/XXXL")!,
          latitude: 47.225800, longitude: 39.718900),
     
     Cafe(name: "Surf Coffee Right Coast", address: "ул. Береговая, 12/1", city: "Ростов-на-Дону",
-         imageURL: URL(string: "https://example.com/coffee_placeholder.jpg")!,
+         imageURL: URL(string: "https://avatars.mds.yandex.net/get-altay/10589039/2a0000018b952b758043e44f81baca841532/XXXL")!,
          latitude: 47.222500, longitude: 39.710000),
     
     Cafe(name: "Surf Coffee Arbat", address: "ул. Новый Арбат, 7а", city: "Москва",

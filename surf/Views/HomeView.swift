@@ -44,6 +44,11 @@ struct HomeView: View {
                                 .matchedGeometryEffect(id: "card", in: animation)
                                 .transition(.asymmetric(insertion: .scale.combined(with: .opacity),
                                                         removal: .opacity.combined(with: .scale)))
+                            Text("Ваша карта будет здесь даже когда вы перезайдёте, перезагрузите телефон или будете оффлайн.")
+                                        .font(.footnote)
+                                        .foregroundColor(.gray)
+                                        .multilineTextAlignment(.center)
+                                        .padding(.horizontal)
                         } else {
                             VStack(spacing: 12) {
                                 Image(systemName: "creditcard")

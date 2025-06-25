@@ -83,11 +83,19 @@ struct CafesView: View {
                 }
                 .padding(.vertical, 8)
 
+                // Сноска про сортировку
+                Text("Список автоматически отсортирован по расстоянию до ближайшей кофейни.")
+                    .font(.footnote)
+                    .foregroundColor(.gray)
+                    .multilineTextAlignment(.center)
+                    .padding(.horizontal)
+                    .padding(.bottom, 4)
+
                 Divider()
 
                 if isGridView {
                     ScrollView {
-                        LazyVGrid(columns: [GridItem(.adaptive(minimum: 180, maximum: 200))], spacing: 16) {
+                        LazyVGrid(columns: [GridItem(.adaptive(minimum: 150, maximum: 200))], spacing: 16) {
                             ForEach(filteredCafes) { cafe in
                                 CafeCardView(cafe: cafe, userLocation: userLocation)
                                     .frame(width: 180, height: 240)
@@ -103,6 +111,15 @@ struct CafesView: View {
                     }
                     .listStyle(PlainListStyle())
                 }
+
+                // Сноска про картинки — внизу
+                Text("В целях экономии трафика отображаются картинки только кофеен вашего города.")
+                    .font(.footnote)
+                    .foregroundColor(.gray)
+                    .multilineTextAlignment(.center)
+                    .padding(.horizontal)
+                    .padding(.top, 4)
+                    .padding(.bottom, 8)
             }
             .background(
                 LinearGradient(

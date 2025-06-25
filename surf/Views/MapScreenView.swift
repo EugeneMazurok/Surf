@@ -13,14 +13,26 @@ struct MapScreenView: View {
     @Environment(\.colorScheme) var colorScheme
     
     var filteredPromos: [Promo] {
-        guard let userCity = locationManager.city?.lowercased() else { return [] }
-        return promos.filter { promo in
-            promo.cafe.city.lowercased() == userCity
+        guard let userLocation = locationManager.location else { return promos }
+        
+        return promos.sorted {
+            let loc1 = CLLocation(latitude: $0.cafe.latitude, longitude: $0.cafe.longitude)
+            let loc2 = CLLocation(latitude: $1.cafe.latitude, longitude: $1.cafe.longitude)
+            return loc1.distance(from: userLocation) < loc2.distance(from: userLocation)
         }
     }
 
     var body: some View {
         VStack(spacing: 0) {
+            HStack {
+                Text("Карта")
+                    .font(.largeTitle.bold())
+                    .padding(.leading)
+                Spacer()
+            }
+            .padding(.top, 12)
+            .padding(.bottom, 4)
+
             Map(coordinateRegion: $region, annotationItems: cafesData) { cafe in
                 MapAnnotation(coordinate: CLLocationCoordinate2D(latitude: cafe.latitude, longitude: cafe.longitude)) {
                     Button(action: {
@@ -50,12 +62,17 @@ struct MapScreenView: View {
             Divider()
                 .padding(.vertical, 8)
             
-            
             VStack(alignment: .leading, spacing: 8) {
                 Text("Акции \(locationManager.city.map { "в \($0)" } ?? "рядом")")
                     .font(.title3.bold())
                     .padding(.horizontal)
                     .foregroundColor(.primary)
+
+                Text("Список автоматически отсортирован по расстоянию до ближайшей кофейни.")
+                    .font(.footnote)
+                    .foregroundColor(.gray)
+                    .multilineTextAlignment(.leading)
+                    .padding(.horizontal)
                 
                 if filteredPromos.isEmpty {
                     Text("В вашем городе пока нет доступных акций 🥲")

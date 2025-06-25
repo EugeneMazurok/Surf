@@ -40,9 +40,13 @@ struct CafeRowView: View {
                 Text(cafe.name)
                     .font(.headline)
                     .foregroundColor(.primary)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.5)
                 Text(cafe.address)
                     .font(.caption)
                     .foregroundColor(.secondary)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.5)
 
                 HStack(spacing: 4) {
                     Image(systemName: "location")

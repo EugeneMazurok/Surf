@@ -22,9 +22,13 @@ struct PromoCard: View {
                     Text(promo.title)
                         .font(.headline)
                         .foregroundColor(.primary)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.5)
                     Text(promo.description)
                         .font(.subheadline)
                         .foregroundColor(.secondary)
+                        .lineLimit(3)
+                        .minimumScaleFactor(0.5)
                 }
             }
             
@@ -37,6 +41,8 @@ struct PromoCard: View {
                 Text(promo.cafe.name)
                     .font(.footnote)
                     .foregroundColor(Color(.secondaryLabel))
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.5)
             }
         }
         .padding()

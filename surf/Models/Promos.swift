@@ -31,10 +31,5 @@ let promos: [Promo] = [
         title: "👕 Скидка за SURF-лук",
         description: "Приди в одежде Surf и получи бесплатный фильтр в Surf Coffee ASP",
         cafe: cafesData.first(where: { $0.name.contains("ASP") })!
-    ),
-    Promo(
-        title: "🛵 Кофе байкерам",
-        description: "Покажи ключи от байка – получи двойной эспрессо в Surf Coffee Right Coast",
-        cafe: cafesData.first(where: { $0.name.contains("Right Coast") })!
     )
 ]

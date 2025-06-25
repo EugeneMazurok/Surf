@@ -58,11 +58,14 @@ struct CafeCardView: View {
             Text(cafe.name)
                 .font(.headline)
                 .foregroundColor(.primary)
+                .lineLimit(1)
+                .minimumScaleFactor(0.5)
 
             Text(cafe.address)
                 .font(.subheadline)
                 .foregroundColor(.secondary)
-                .lineLimit(2)
+                .lineLimit(1)
+                .minimumScaleFactor(0.5)
 
             if let dist = distanceText {
                 Text("Расстояние: \(dist)")
